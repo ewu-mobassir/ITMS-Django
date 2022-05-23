@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Offers</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-75 mt-5">
+        {% for offer in offers %}
+        <div class="container card card-body m-5">
+        <h4>Spot Name: {{offer.spot.name}}</br></h4>
+            Offered By: {{offer.offered_by}}</br>
+            Base Price:{{offer.base_price}}</br>
+            Extra per person: {{offer.extra_per_person}}</br>
+            <a type="button" class="btn btn-dark m-1" href="{% url 'booking' offer.id %}">Take this offer</a>
+
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

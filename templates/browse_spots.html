@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse spots</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-75 mt-5">
+        <form class="form-inline rounded" action="">
+        <input type="checkbox" value="True" name="sameDistrict" id="filterDistrict"><label> Spots on my district</label>
+        <button class="btn btn-lg btn-primary btn-block m-1 mt-3" type="submit">Filter</button>
+        {% for spot in browse_spots %}
+        <div class="container card card-body m-5">
+        <h4>Spot Name: {{spot.name}}</br></h4>
+            Spot Type: {{spot.type}}</br>
+            Spot District: {{spot.district}}</br>
+            Description:{{spot.description}}</br>
+            Full Address: {{spot.full_address}}</br>
+            Rating: {{spot.average_rating}}</br>
+            <img src="{{spot.images.filter.first.image.url}}" class="img-fluid"/>
+        <a type="button" class="btn btn-dark m-1" href="{% url 'view_review' spot.id %}">View Reviews</a>
+        <a type="button" class="btn btn-dark m-1" href="{% url 'add_review' spot.id %}">Add a Review</a>
+        <a type="button" class="btn btn-dark m-1" href="{% url 'add_image' spot.id %}">Add Image</a>
+        {% if user.is_agency and not spot.geoLocationSet%}
+            <a type="button" class="btn btn-dark m-1" href="{% url 'set_spot_geo' spot.id%}">Set Spot Geolocation</a>
+        {% endif %}
+        {% if user.is_agency %}
+            <a type="button" class="btn btn-dark m-1" href="{% url 'create_offer' %}">Create Offer</a>
+        {% endif %}
+        {% if spot.geoLocationSet%}
+            <a type="button" class="btn btn-dark m-1" href="https://www.google.com/maps/place/{{spot.geoLat}},{{spot.geoLon}}" target="_blank">View Location on Google Maps</a>
+        {% endif %}
+        <a type="button" class="btn btn-dark m-1" href="{% url 'browse_offers' spot.id %}">View Offers</a>
+
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

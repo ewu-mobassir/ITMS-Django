@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse spots</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-75 mt-5">
+
+        <div class="container ml-4 card card-body">
+            <h4>Reviews for {{spot}}</h4>
+            {% for review in reviews %}
+            <div class="container m-1 card card-body">
+                Review By: {{review.user}} <br>
+                Review: {{review.review}}<br>
+                Rating: {{review.rating}}/5<br>
+                Review Time: {{review.date}}<br>
+            </div>
+        {% endfor %}
+        </div>
+
+    </div>
+</body>
+</html>

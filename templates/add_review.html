@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rating.css' %}">
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-50 mt-5">
+        <form class="form-signin rounded" method="post">{% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal text-center">Add Review</h1>
+            <select type="text" name="spot" id="inputSpot" class="form-control m-1" autocomplete="on">
+                <option value="{{spot1.id}}" selected>{{spot1.id}} {{spot1}}</option>
+                {% for spot in spots %}
+                    <option value="{{spot.id}}"> {{spot.id}} {{spot}}</option>>
+                {% endfor %}
+            </select>
+            <textarea type="text" name="review" id="inputType" class="form-control m-1" required placeholder="Write your review here"></textarea>
+            <h4>Rating: </h4>
+            <div class="rating">
+                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+            </div>
+            {% for field in add_review_form %}
+                {% for error in field.errors %}
+                  <p style="color: red">{{field.name.upper}} : {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% if add_review_form.non_field_errors %}
+            <div style="color: red">
+              <p>{{add_review_form.non_field_errors}}</p>
+            </div>
+            {% endif %}
+          <button class="btn btn-lg btn-primary btn-block m-1 mt-3" type="submit">Add Review</button>
+        </form>
+    </div>
+</body>
+</html>

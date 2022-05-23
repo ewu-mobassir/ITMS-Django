@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new spot</title>
+    {% load static %}
+</head>
+<body>
+    <div class="container main justify-content-center w-75 mt-5">
+        <form class="form-signin rounded" method="post">{% csrf_token %}
+            {{ add_spot_form.as_p}}
+          {% for field in add_spot_form %}
+              <p>
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </p>
+          {% endfor %}
+          {% if add_spot_form.non_field_errors %}
+            <div style="color: red">
+              <p>{{add_spot_form.non_field_errors}}</p>
+            </div>
+          {% endif %}
+          <button class="btn btn-lg btn-primary btn-block m-1 mt-3" type="submit">Add to database</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+<select type="text" name="district" id="inputDistrict" class="form-control m-1" autocomplete="on">
+                <option value="" selected disabled>Select Spot</option>
+                {% for spot in spots %}
+                    <option value="{{spot.id }}">{{spot.name}}</option>>
+                {% endfor %}
+            </select>

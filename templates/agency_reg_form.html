@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-50 mt-5">
+        <form class="form-signin rounded" method="post">{% csrf_token %}
+          <h1 class="h3 mb-3 font-weight-normal text-center">Register an Agency</h1>
+          <input type="email" name="email" id="inputEmail" class="form-control m-1" placeholder="Email address" required autofocus>
+          <input type="number" name="phone" id="inputPhone" class="form-control m-1" placeholder="Phone Number" required>
+          <input type="text" name="name" id="inputName" class="form-control m-1" placeholder="Name" required>
+          <input type="password" name="password1" id="inputPassword1" class="form-control m-1" placeholder="Password" required>
+          <input type="password" name="password2" id="inputPassword2" class="form-control m-1" placeholder="Confirm password" required>
+
+          {% for field in agency_reg_form %}
+              <p>
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </p>
+          {% endfor %}
+          {% if agency_reg_form.non_field_errors %}
+            <div style="color: red">
+              <p>{{agency_reg_form.non_field_errors}}</p>
+            </div>
+          {% endif %}
+          <button class="btn btn-lg btn-primary btn-block m-1 mt-3" type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

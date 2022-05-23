@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Image</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="script" href="{% static 'js/bootstrap.bundle.js' %}">
+</head>
+<body>
+    <div class="container main justify-content-center w-50 mt-5">
+        <form class="form-signin rounded" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal text-center">Add Image for Spot</h1>
+            <select type="text" name="spot" id="inputSpot" class="form-control m-1" autocomplete="on">
+                <option value="{{spot1.id}}" selected>{{spot1.id}} {{spot1}}</option>
+                {% for spot in spots %}
+                    <option value="{{spot.id}}"> {{spot.id}} {{spot}}</option>>
+                {% endfor %}
+            </select>
+            <input type="file" name="image" accept="image/*" required id="image" class="form-control m-1 ">
+            {% for field in add_image_form %}
+                {% for error in field.errors %}
+                  <p style="color: red">{{field.name.upper}} : {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% if add_image_form.non_field_errors %}
+            <div style="color: red">
+              <p>{{add_image_form.non_field_errors}}</p>
+            </div>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block m-1 mt-3" type="submit">Add Image</button>
+        </form>
+    </div>
+</body>
+</html>
